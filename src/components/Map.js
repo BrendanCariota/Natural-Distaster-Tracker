@@ -4,11 +4,13 @@ import LocationMarkerWildfire from './LocationMarkerWildfire'
 import LocationMarkerStorm from './LocationMarkerStorm'
 import LocationMarkerVolcano from './LocationMarkerVolcano'
 import LocationInfoBox from './LocationInfoBox'
+import ViewToggleBox from './ViewToggleBox'
 
 const Map = ({ eventData, center, zoom }) => {
-    // const [wildfireLocationInfo, setWildfireLocationInfo] = useState(null);
-    // const [stormLocationInfo, setStormLocationInfo] = useState(null);
     const [allInfo, setAllInfo] = useState('Cant be null');
+    const [wildfireToggle, setWildfireToggle] = useState(true);
+    const [stormToggle, setStormToggle] = useState(true);
+    const [volcanoToggle, setVolcanoToggle] = useState(true);
 
     // --- WILDFIRE MARKERS ---
     const wildfireMarkers = eventData.map(ev => {
@@ -57,11 +59,19 @@ const Map = ({ eventData, center, zoom }) => {
                 defaultCenter={ center }
                 defaultZoom={ zoom }
             >
-               { wildfireMarkers }
-               { stormMarkers }
-               { volcanoMarkers }
+               { wildfireToggle ? wildfireMarkers : null }
+               { stormToggle ? stormMarkers : null }
+               { volcanoToggle ? volcanoMarkers : null }
             </GoogleMapReact>
             <LocationInfoBox info={allInfo} />
+            <ViewToggleBox
+                wildfireToggle={wildfireToggle}
+                setWildfireToggle={setWildfireToggle}
+                stormToggle={stormToggle}
+                setStormToggle={setStormToggle}
+                volcanoToggle={volcanoToggle}
+                setVolcanoToggle={setVolcanoToggle}
+            />
             
         </div>
     )
